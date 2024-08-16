@@ -24,6 +24,7 @@
         <module>common-swagger</module>
         <module>common-sentinel</module>
         <module>common-seata</module>
+        <module>common-mvc</module>
     </modules>
 
     <properties>

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Setter
 @RequiredArgsConstructor
 @Accessors(chain = true)
-public class R<T> implements Serializable {
+public class CommonResult<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,36 +29,36 @@ public class R<T> implements Serializable {
 
     private T data;
 
-    public static <T> R<T> ok() {
+    public static <T> CommonResult<T> ok() {
         return restResult(CommonConstants.SUCCESS, null, null);
     }
 
-    public static <T> R<T> ok(T data) {
+    public static <T> CommonResult<T> ok(T data) {
         return restResult(CommonConstants.SUCCESS, null, data);
     }
 
-    public static <T> R<T> ok(String message, T data) {
+    public static <T> CommonResult<T> ok(String message, T data) {
         return restResult(CommonConstants.SUCCESS, null, data);
     }
 
-    public static <T> R<T> failed() {
+    public static <T> CommonResult<T> failed() {
         return restResult(CommonConstants.FAIL, null, null);
     }
 
-    public static <T> R<T> failed(String msg) {
+    public static <T> CommonResult<T> failed(String msg) {
         return restResult(CommonConstants.FAIL, msg, null);
     }
 
-    public static <T> R<T> failed(T data) {
+    public static <T> CommonResult<T> failed(T data) {
         return restResult(CommonConstants.FAIL, null, data);
     }
 
-    public static <T> R<T> failed(String msg, T data) {
+    public static <T> CommonResult<T> failed(String msg, T data) {
         return restResult(CommonConstants.FAIL, msg, data);
     }
 
-    public static <T> R<T> restResult(int code, String msg, T data) {
-        R<T> apiResult = new R<>();
+    public static <T> CommonResult<T> restResult(int code, String msg, T data) {
+        CommonResult<T> apiResult = new CommonResult<>();
         apiResult.setCode(code);
         apiResult.setData(data);
         apiResult.setMessage(msg);
