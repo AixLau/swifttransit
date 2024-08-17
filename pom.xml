@@ -15,7 +15,7 @@
     <version>${revision}</version>
     <name>swifttransit</name>
     <modules>
-        <module>swifttransit-getway</module>
+        <module>swifttransit-gateway</module>
         <module>swifttransit-user</module>
         <module>swifttransit-order</module>
         <module>swifttransit-courier</module>
@@ -29,7 +29,6 @@
         <module>swifttransit-auth</module>
         <module>swifttransit-scheduler</module>
         <module>swifttransit-monitor</module>
-        <module>swifttransit-register</module>
     </modules>
     <packaging>pom</packaging>
     <description>swifttransit</description>

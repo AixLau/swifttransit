@@ -35,7 +35,6 @@ swifttransit/
 ├── swifttransit-notification/        # 通知服务
 ├── swifttransit-order/               # 订单服务
 ├── swifttransit-org-vehicle/         # 组织与车辆管理
-├── swifttransit-register/            # 注册中心
 ├── swifttransit-scheduler/           # 调度管理
 ├── swifttransit-user/                # 用户端
 └── pom.xml                           # 根POM文件
