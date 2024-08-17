@@ -1,0 +1,43 @@
+server:
+  port: 8010
+  servlet:
+    context-path: /auth
+
+spring:
+  application:
+    name: swifttransit-auth
+  cloud:
+    nacos:
+      server-addr: swifttransit:8848
+      discovery:
+        enabled: true
+        server-addr: swifttransit:8848
+        namespace: 8d81aae5-2b8d-4425-880a-542091cdc3e7
+
+
+
+  datasource:
+    url: jdbc:mysql://swifttransit:3306/swifttransit?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: aix
+    password: Lushiwu123.
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # HikariCP 数据源配置
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+
+mybatis-plus:
+#mybatis-plus  mapper-locations: classpath:/mapper/**/*.xml
+#  type-aliases-package: com.yourpackage.model
+  configuration:
+    # 使用MyBatis缓存机制
+    cache-enabled: false
+    # 显示SQL语句
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    use-generated-keys: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
