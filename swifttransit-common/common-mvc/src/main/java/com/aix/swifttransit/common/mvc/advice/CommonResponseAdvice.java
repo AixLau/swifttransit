@@ -24,6 +24,7 @@ public class CommonResponseAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+
         return !returnType.getDeclaringClass().isAnnotationPresent(IgnoreResponseAdvice.class) &&
                 (returnType.getMethod() == null || !returnType.getMethod().isAnnotationPresent(IgnoreResponseAdvice.class));
     }
@@ -31,10 +32,10 @@ public class CommonResponseAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         CommonResult<Object> result = CommonResult.ok();
-        if (ObjectUtils.isEmpty(body)) {
-            return response;
-        } else {
+        if (!ObjectUtils.isEmpty(body)) {
             result.setData(body);
+        } else if (body instanceof CommonResult) {
+            return body;
         }
         return result;
     }

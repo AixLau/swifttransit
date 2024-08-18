@@ -1,4 +1,4 @@
-package com.swifttransit.auth.constant;
+package com.aix.swifttransit.auth.constant;
 
 public interface AuthorityConstant {
 
@@ -13,4 +13,8 @@ public interface AuthorityConstant {
      * refreshToken 过期时间7天
      */
     int REFRESH_TOKEN_EXPIRATION = 1000 * 60 * 60 * 24 * 7;
+
+    String REFRESH_TOKEN_KEY = "REFRESH_TOKEN::";
+
+
 }

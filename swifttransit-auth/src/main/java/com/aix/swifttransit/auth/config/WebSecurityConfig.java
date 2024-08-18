@@ -1,4 +1,4 @@
-package com.swifttransit.auth.config;
+package com.aix.swifttransit.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import java.util.List;
 public class WebSecurityConfig {
 
     private final String[] requestMatchers = {
-            "/login"
+            "/**"
     };
 
     @Bean

@@ -1,6 +1,7 @@
 package com.aix.swifttransit.common.core.util;
 
 import com.aix.swifttransit.common.core.constant.CommonConstants;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 
 @ToString
 @Setter
+@Getter
 @RequiredArgsConstructor
 @Accessors(chain = true)
 public class CommonResult<T> implements Serializable {
