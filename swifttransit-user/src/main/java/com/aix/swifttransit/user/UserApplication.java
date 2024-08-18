@@ -1,4 +1,4 @@
-package com.swifttransit.user;
+package com.aix.swifttransit.user;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 
 @Slf4j
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.aix.swifttransit"})
 public class UserApplication {
 
     public static void main(String[] args) throws UnknownHostException {

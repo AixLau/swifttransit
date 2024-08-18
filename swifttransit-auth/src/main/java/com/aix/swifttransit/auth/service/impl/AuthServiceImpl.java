@@ -3,8 +3,7 @@ package com.aix.swifttransit.auth.service.impl;
 import com.aix.swifttransit.auth.client.UserClient;
 import com.aix.swifttransit.auth.constant.AuthorityConstant;
 import com.aix.swifttransit.auth.dto.LoginResponse;
-import com.aix.swifttransit.auth.dto.LoginUsernamePasswordRequest;
-import com.aix.swifttransit.auth.dto.UserResponse;
+import com.aix.swifttransit.auth.dto.LoginUsernameRequest;
 import com.aix.swifttransit.auth.enums.DeletedStatusEnum;
 import com.aix.swifttransit.auth.enums.UserStatusEnum;
 import com.aix.swifttransit.auth.service.AuthService;
@@ -28,40 +27,36 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
-    private UserClient userClient;
+    private final UserClient userClient;
 
     @Override
-    public LoginResponse loginUserNamePassword(LoginUsernamePasswordRequest loginUsernamePasswordRequest) {
-        // todo 通过 Feign Client 调用用户服务查询用户信息
-        // UserResponse userResponse = userClient.findByUsername(loginUsernamePasswordRequest.getUsername());
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUsername("admin");
-        userResponse.setPassword("$2a$10$6iCMO.7xj3BjKvJwnFxWR.UDG0NVHqpOTXA5NoT/5izh75xxUUeOy");
-        userResponse.setDeleted(DeletedStatusEnum.NOT_DELETED.getCode());
-        userResponse.setStatus(UserStatusEnum.ENABLE.getCode());
+    public LoginResponse loginUserNamePassword(LoginUsernameRequest loginUsernameRequest) {
+        // 通过 Feign Client 调用用户服务查询用户信息
+        var userCredentialsDTO = userClient.findByUsername(loginUsernameRequest.getUsername());
+
         // 判断用户是否存在
-        if (ObjectUtils.isEmpty(userResponse) ||
-                userResponse.getDeleted() == DeletedStatusEnum.DELETED.getCode()) {
+        if (ObjectUtils.isEmpty(userCredentialsDTO) ||
+                userCredentialsDTO.getDeleted() == DeletedStatusEnum.DELETED.getCode()) {
             throw new RuntimeException("用户不存在");
         }
 
         // 校验用户状态
-        if (userResponse.getStatus() == UserStatusEnum.DISABLED.getCode())
+        if (userCredentialsDTO.getStatus() == UserStatusEnum.DISABLED.getCode())
             throw new RuntimeException("用户已被禁用");
 
         // 校验密码
-        if (!passwordEncoder.matches(loginUsernamePasswordRequest.getPassword(), userResponse.getPassword())) {
+        if (!passwordEncoder.matches(loginUsernameRequest.getPassword(), userCredentialsDTO.getPassword())) {
             throw new RuntimeException("密码错误");
         }
 
         // 将 Refresh Token 存储到 Redis 中，并设置过期时间
-        var refreshToken = JwtTokenUtil.generateRefreshToken(userResponse.getUsername());
+        var refreshToken = JwtTokenUtil.generateRefreshToken(userCredentialsDTO.getUsername());
         // 对 Refresh Token 进行 MD5 加密
         String refreshTokenHash = DigestUtils.md5DigestAsHex(refreshToken.getBytes(StandardCharsets.UTF_8));
-        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + userResponse.getUsername(), refreshTokenHash, AuthorityConstant.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + userCredentialsDTO.getUsername(), refreshTokenHash, AuthorityConstant.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         return new LoginResponse()
-                .setAccessToken(JwtTokenUtil.generateAccessToken(userResponse.getUsername())).
+                .setAccessToken(JwtTokenUtil.generateAccessToken(userCredentialsDTO.getUsername())).
                 setRefreshToken(refreshToken);
     }
 

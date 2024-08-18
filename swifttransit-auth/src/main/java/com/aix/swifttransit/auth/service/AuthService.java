@@ -1,17 +1,17 @@
 package com.aix.swifttransit.auth.service;
 
 import com.aix.swifttransit.auth.dto.LoginResponse;
-import com.aix.swifttransit.auth.dto.LoginUsernamePasswordRequest;
+import com.aix.swifttransit.auth.dto.LoginUsernameRequest;
 
 public interface AuthService {
 
     /**
      * 用户提供用户名和密码进行登录
      *
-     * @param loginUsernamePasswordRequest 账号密码登录请求对象
+     * @param loginUsernameRequest 账号密码登录请求对象
      * @return 用户登录响应对象
      */
-    LoginResponse loginUserNamePassword(LoginUsernamePasswordRequest loginUsernamePasswordRequest);
+    LoginResponse loginUserNamePassword(LoginUsernameRequest loginUsernameRequest);
 
     /**
      * 使用刷新令牌获取新的访问令牌。

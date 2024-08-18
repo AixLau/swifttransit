@@ -1,20 +1,32 @@
-package com.aix.swifttransit.auth.dto;
+package com.aix.swifttransit.user.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * Feign Client 的返回对象，用于接收用户服务返回的用户信息。
+ * <p>
+ * 用户表
+ * </p>
+ *
+ * @author aix
+ * @since 2024-08-18
  */
 @Data
-public class UserResponse implements Serializable {
-
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("user")
+@Tag(name = "用户", description = "用户交互载体")
+public class User implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

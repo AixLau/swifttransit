@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: swifttransit-user
+  devtools:
+    restart:
+      enabled: true
   cloud:
     nacos:
       server-addr: swifttransit:8848
@@ -51,7 +54,7 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: com.swifttransit.user
+      packages-to-scan: com.aix.swifttransit.user
 knife4j:
   enable: true
   setting:

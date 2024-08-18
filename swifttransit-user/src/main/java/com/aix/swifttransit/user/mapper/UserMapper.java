@@ -1,7 +1,7 @@
-package com.swifttransit.user.mapper;
+package com.aix.swifttransit.user.mapper;
 
+import com.aix.swifttransit.user.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.swifttransit.user.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

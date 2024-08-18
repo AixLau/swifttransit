@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: swifttransit-auth
+  devtools:
+    restart:
+      enabled: true
   cloud:
     nacos:
       server-addr: swifttransit:8848

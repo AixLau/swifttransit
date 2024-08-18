@@ -1,7 +1,7 @@
 package com.aix.swifttransit.auth.controller;
 
 import com.aix.swifttransit.auth.dto.LoginResponse;
-import com.aix.swifttransit.auth.dto.LoginUsernamePasswordRequest;
+import com.aix.swifttransit.auth.dto.LoginUsernameRequest;
 import com.aix.swifttransit.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,8 +19,8 @@ public class AuthController {
 
     @Operation(summary = "用户登录", description = "用户提供用户名和密码进行登录，返回访问令牌")
     @PostMapping("/login")
-    public LoginResponse loginUsernamePassword(@RequestBody @Valid LoginUsernamePasswordRequest loginUsernamePasswordRequest) {
-        return this.authService.loginUserNamePassword(loginUsernamePasswordRequest);
+    public LoginResponse loginUsernamePassword(@RequestBody @Valid LoginUsernameRequest loginUsernameRequest) {
+        return this.authService.loginUserNamePassword(loginUsernameRequest);
     }
 
     @Operation(summary = "刷新令牌", description = "使用刷新令牌获取新的访问令牌")
