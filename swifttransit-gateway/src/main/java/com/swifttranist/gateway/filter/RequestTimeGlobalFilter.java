@@ -27,7 +27,7 @@ public class RequestTimeGlobalFilter implements GlobalFilter, Ordered {
                     // 请求完成后计算耗时
                     Instant endTime = Instant.now();
                     var elapsedTime = Duration.between(startTime, endTime).toMillis();
-                    log.info("请求URL：{}took {}ms", exchange.getRequest().getURI(), elapsedTime);
+                    log.info("请求URL：{} took {}ms", exchange.getRequest().getURI(), elapsedTime);
                 })
         );
     }
