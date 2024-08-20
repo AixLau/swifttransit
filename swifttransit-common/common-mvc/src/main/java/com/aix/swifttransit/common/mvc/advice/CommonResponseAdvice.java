@@ -31,11 +31,12 @@ public class CommonResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+        if (body instanceof CommonResult) {
+            return body;
+        }
         CommonResult<Object> result = CommonResult.ok();
         if (!ObjectUtils.isEmpty(body)) {
-            result.setData(body);
-        } else if (body instanceof CommonResult) {
-            return body;
+            result.setData(body);  // 设置数据
         }
         return result;
     }

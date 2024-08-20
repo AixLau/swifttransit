@@ -4,6 +4,7 @@ import com.aix.swifttransit.auth.dto.LoginResponse;
 import com.aix.swifttransit.auth.dto.LoginUsernameRequest;
 import com.aix.swifttransit.auth.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,9 @@ public class AuthController {
     }
 
     @Operation(summary = "刷新令牌", description = "使用刷新令牌获取新的访问令牌")
+    @Parameter(name = "refreshToken", description = "长期刷新令牌", required = true)
     @PostMapping("/refresh-token")
-    public LoginResponse refreshToken(@RequestBody String refreshToken) {
+    public LoginResponse refreshToken(@RequestBody @Valid String refreshToken) {
         return authService.refreshToken(refreshToken);
     }
 

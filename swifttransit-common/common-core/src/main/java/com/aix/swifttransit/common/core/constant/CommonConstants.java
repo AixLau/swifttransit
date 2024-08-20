@@ -2,10 +2,21 @@ package com.aix.swifttransit.common.core.constant;
 
 public interface CommonConstants {
 
+
+    /**
+     * accessToken 过期时间 1个小时
+     */
+    int ACCESS_TOKEN_EXPIRATION = 1000 * 60 * 60;
+
+    /**
+     * refreshToken 过期时间7天
+     */
+    int REFRESH_TOKEN_EXPIRATION = 1000 * 60 * 60 * 24 * 7;
+
     /**
      * JWT 公钥
      */
-    String PublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq9pntPxgHiY7oOcuDfBVKclafCw1wc5Jc8jgmq2DnqLbU5CbK02X9tr3kWyho/yO0EY4NwgGXFSxj2nKNJvUhoZMNFvbqr7ovwxmL7I+ga828pPSHubNTt10ouK805GZwXfIISmJ3U1fPxC/rv3BQa1uX4+oAuvGMZqQ/1znGiuAMJEIGjvU7qEhvZDa/MVjPzqYBBoMK7Wou16jh54KYD80jRW7pvBgnrh94XCPAOQccWSdc9TXbLxYRSkFxDqgjym2PTS2dxU0zjLHKa2Ml+67bBnI5IQvREHp9KZ5NcZBRfnexnkIFLUjZzjOv1TiXN+E32VUM8g/OyF4lGwQlQIDAQAB";
+    String PublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkifoJi3N4xg6EqPSduI53WyY9IPTDzmq/Eplvy9Co1uwqbTI3xfdyDEwQfDQnYGYfASoebrdKqzjJAcGRUadFr2QcHrPVqRzkyRQ/tEx9rlTFQrXtgM3Kyj45ZsKRNMXG8Ix6cBqZxTBT4XPA4L6cWTdAwqB824IvpkCmP4ePR9EH9dAt84i0qd+lPD6u9wtXphyBwXUpOzXrYroZjz8W/Qs42Rf1uprbcI3DwLoE1K4iKLp9rFzJt7g1JzMvs1pcfUAFHfPCzz2oLpu5V9Pv9Vj+Ef8qLn23iXx3Vorc8f/6lcCaT4lxNxTyiqQ/SJsFS9u/Cph5ojaZAqmVcpPlQIDAQAB";
 
     /**
      * JWT 中存储的用户信息的 key

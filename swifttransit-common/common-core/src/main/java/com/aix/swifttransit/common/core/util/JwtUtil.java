@@ -1,51 +1,21 @@
-package com.aix.swifttransit.auth.util;
+package com.aix.swifttransit.common.core.util;
 
-import com.aix.swifttransit.auth.constant.AuthorityConstant;
 import com.aix.swifttransit.common.core.constant.CommonConstants;
-import com.aix.swifttransit.common.core.util.KeyUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Date;
 import java.util.function.Function;
 
-public class JwtTokenUtil {
-
+public class JwtUtil {
     /**
      * 密钥实例
      */
-    private static final PrivateKey PRIVATE_KEY = KeyUtil.loadPrivateKey(AuthorityConstant.PrivateKey);
     private static final PublicKey PUBLIC_KEY = KeyUtil.loadPublicKey(CommonConstants.PublicKey);
 
-
     /**
-     * 生成 accessToken 有效期 1 个小时
-     */
-    public static String generateAccessToken(String username) {
-        return Jwts.builder()
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + CommonConstants.ACCESS_TOKEN_EXPIRATION))
-                .signWith(PRIVATE_KEY, Jwts.SIG.RS256)
-                .compact();
-    }
-
-    /**
-     * 生成 refreshToken 有效期 7天
-     */
-    public static String generateRefreshToken(String username) {
-        return Jwts.builder()
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + CommonConstants.REFRESH_TOKEN_EXPIRATION))
-                .signWith(PRIVATE_KEY, Jwts.SIG.RS256)
-                .compact();
-    }
-
-
-    /**
+     * /**
      * 检查 token 是否过期
      */
     public static Boolean isTokenExpired(String token) {

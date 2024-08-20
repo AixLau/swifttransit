@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * 这个 Client 将用于从用户服务中获取用户信息。
  */
-@FeignClient(name = "swifttransit-user", path = "/user")
+@FeignClient(name = "swifttransit-user", path = "/user/user")
 public interface UserClient {
 
     @GetMapping("/internal/find-by-username")

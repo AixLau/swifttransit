@@ -17,7 +17,7 @@ import java.util.List;
 public class WebSecurityConfig {
 
     private final String[] requestMatchers = {
-            "/**"
+            "/login"
     };
 
     @Bean
@@ -25,11 +25,12 @@ public class WebSecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // 配置CORS
                 .csrf(AbstractHttpConfigurer::disable) // 禁用 CSRF 保护
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(requestMatchers).permitAll() // 允许访问接口
+                        .requestMatchers("/**").permitAll() // 允许访问接口
                         .anyRequest().authenticated() // 其他接口需要认证
                 );
         return http.build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

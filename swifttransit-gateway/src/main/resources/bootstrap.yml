@@ -25,3 +25,12 @@ nacos:
       config:
         data-id: swifttransit-gateway-router
         group: gateway
+knife4j:
+  gateway:
+    enabled: true
+    strategy: discover #网关文档聚合方式：服务发现（自动聚合）
+    discover:
+      version: openapi3 #配置OpenAPI3规范
+      enabled: true #配置开启服务发现
+    tags-sorter: order #配置tag排序规则
+    operations-sorter: order #配置operation排序规则

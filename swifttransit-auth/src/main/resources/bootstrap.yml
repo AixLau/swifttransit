@@ -1,12 +1,11 @@
 server:
   port: 8010
+  servlet:
+    context-path: /auth
 
 spring:
   application:
     name: swifttransit-auth
-  devtools:
-    restart:
-      enabled: true
   cloud:
     nacos:
       server-addr: swifttransit:8848
@@ -14,6 +13,10 @@ spring:
         enabled: true
         server-addr: swifttransit:8848
         namespace: 8d81aae5-2b8d-4425-880a-542091cdc3e7
+    openfeign:
+      httpclient:
+        hc5:
+          enabled: true
   datasource:
     url: jdbc:mysql://swifttransit:3306/swifttransit?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: aix

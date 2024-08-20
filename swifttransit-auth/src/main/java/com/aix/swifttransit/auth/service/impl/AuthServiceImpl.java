@@ -8,6 +8,8 @@ import com.aix.swifttransit.auth.enums.DeletedStatusEnum;
 import com.aix.swifttransit.auth.enums.UserStatusEnum;
 import com.aix.swifttransit.auth.service.AuthService;
 import com.aix.swifttransit.auth.util.JwtTokenUtil;
+import com.aix.swifttransit.common.core.constant.CommonConstants;
+import com.aix.swifttransit.common.core.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -53,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         var refreshToken = JwtTokenUtil.generateRefreshToken(userCredentialsDTO.getUsername());
         // 对 Refresh Token 进行 MD5 加密
         String refreshTokenHash = DigestUtils.md5DigestAsHex(refreshToken.getBytes(StandardCharsets.UTF_8));
-        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + userCredentialsDTO.getUsername(), refreshTokenHash, AuthorityConstant.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + userCredentialsDTO.getUsername(), refreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         return new LoginResponse()
                 .setAccessToken(JwtTokenUtil.generateAccessToken(userCredentialsDTO.getUsername())).
@@ -63,12 +65,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponse refreshToken(String refreshToken) {
         // 验证 refreshToken 是否过期，
-        if (JwtTokenUtil.isTokenExpired(refreshToken)) {
+        if (JwtUtil.isTokenExpired(refreshToken)) {
             throw new RuntimeException("refreshToken已过期");
         }
 
         // 通过 token 获取到用户名
-        var username = JwtTokenUtil.getUsername(refreshToken);
+        var username = JwtUtil.getUsername(refreshToken);
         // 对传入的 Refresh Token 进行 MD5 加密
         String refreshTokenHash = DigestUtils.md5DigestAsHex(refreshToken.getBytes(StandardCharsets.UTF_8));
         // 检查 Redis 中的 MD5 加密后的 Refresh Token 是否存在并且有效
@@ -84,7 +86,7 @@ public class AuthServiceImpl implements AuthService {
         // 对新的 Refresh Token 进行 MD5 加密
         String newRefreshTokenHash = DigestUtils.md5DigestAsHex(newRefreshToken.getBytes(StandardCharsets.UTF_8));
         // 更新 Redis 中的 MD5 加密后的 Refresh Token
-        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + username, newRefreshTokenHash, AuthorityConstant.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + username, newRefreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         return new LoginResponse().setAccessToken(newAccessToken).setRefreshToken(newRefreshTokenHash);
     }
