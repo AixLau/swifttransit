@@ -26,6 +26,7 @@ public class JwtTokenUtil {
     public static String generateAccessToken(String username) {
         return Jwts.builder()
                 .subject(username)
+                .claim("type", "ACCESS")
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + CommonConstants.ACCESS_TOKEN_EXPIRATION))
                 .signWith(PRIVATE_KEY, Jwts.SIG.RS256)
@@ -38,12 +39,30 @@ public class JwtTokenUtil {
     public static String generateRefreshToken(String username) {
         return Jwts.builder()
                 .subject(username)
+                .claim("type", "REFRESH")
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + CommonConstants.REFRESH_TOKEN_EXPIRATION))
                 .signWith(PRIVATE_KEY, Jwts.SIG.RS256)
                 .compact();
     }
 
+    /**
+     * 验证 Access Token
+     */
+    public boolean validateAccessToken(String token) {
+        Claims claims = getAllClaimToken(token);
+        String tokenType = claims.get("type", String.class);
+        return "ACCESS".equals(tokenType) && !isTokenExpired(token);
+    }
+
+    /**
+     * 验证 Refresh Token
+     */
+    public boolean validateRefreshToken(String token) {
+        Claims claims = getAllClaimToken(token);
+        String tokenType = claims.get("type", String.class);
+        return "REFRESH".equals(tokenType) && !isTokenExpired(token);
+    }
 
     /**
      * 检查 token 是否过期

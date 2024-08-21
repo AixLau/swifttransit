@@ -2,6 +2,8 @@ package com.aix.swifttransit.common.core.constant;
 
 public interface CommonConstants {
 
+    String REFRESH_TOKEN_KEY = "REFRESH_TOKEN::";
+
 
     /**
      * accessToken 过期时间 1个小时

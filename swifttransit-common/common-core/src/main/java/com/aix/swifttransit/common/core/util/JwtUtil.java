@@ -14,6 +14,25 @@ public class JwtUtil {
      */
     private static final PublicKey PUBLIC_KEY = KeyUtil.loadPublicKey(CommonConstants.PublicKey);
 
+
+    /**
+     * 验证 Access Token
+     */
+    public static boolean validateAccessToken(String token) {
+        Claims claims = getAllClaimToken(token);
+        String tokenType = claims.get("type", String.class);
+        return "ACCESS".equals(tokenType) && !isTokenExpired(token);
+    }
+
+    /**
+     * 验证 Refresh Token
+     */
+    public static boolean validateRefreshToken(String token) {
+        Claims claims = getAllClaimToken(token);
+        String tokenType = claims.get("type", String.class);
+        return "REFRESH".equals(tokenType) && !isTokenExpired(token);
+    }
+
     /**
      * /**
      * 检查 token 是否过期

@@ -55,7 +55,7 @@ public class AuthServiceImpl implements AuthService {
         var refreshToken = JwtTokenUtil.generateRefreshToken(userCredentialsDTO.getUsername());
         // 对 Refresh Token 进行 MD5 加密
         String refreshTokenHash = DigestUtils.md5DigestAsHex(refreshToken.getBytes(StandardCharsets.UTF_8));
-        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + userCredentialsDTO.getUsername(), refreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(CommonConstants.REFRESH_TOKEN_KEY + userCredentialsDTO.getUsername(), refreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         return new LoginResponse()
                 .setAccessToken(JwtTokenUtil.generateAccessToken(userCredentialsDTO.getUsername())).
@@ -65,8 +65,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponse refreshToken(String refreshToken) {
         // 验证 refreshToken 是否过期，
-        if (JwtUtil.isTokenExpired(refreshToken)) {
+        if (!JwtUtil.isTokenExpired(refreshToken)) {
             throw new RuntimeException("refreshToken已过期");
+        }
+
+        // 验证 refreshToken 是否有效
+        if (!JwtUtil.validateRefreshToken(refreshToken)) {
+            throw new RuntimeException("refreshToken 无效");
         }
 
         // 通过 token 获取到用户名
