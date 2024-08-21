@@ -65,11 +65,14 @@ public class JwtTokenUtil {
     }
 
     /**
+     * /**
      * 检查 token 是否过期
+     * true 过期了
+     * false 没有过期
      */
     public static Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateToken(token);
-        return !expiration.before(new Date());
+        return expiration.before(new Date());
     }
 
     /**

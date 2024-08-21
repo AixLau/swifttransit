@@ -10,21 +10,41 @@
     </parent>
 
     <artifactId>swifttransit-admin</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>admin-user</module>
-        <module>admin-logistics</module>
-        <module>admin-finance</module>
-        <module>admin-config</module>
-        <module>admin-security</module>
-        <module>admin-operations</module>
-        <module>admin-reporting</module>
-    </modules>
+
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.aix</groupId>
+            <artifactId>common-mybatisplus</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aix</groupId>
+            <artifactId>common-mvc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aix</groupId>
+            <artifactId>common-swagger</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.aix</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

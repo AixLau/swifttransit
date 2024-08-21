@@ -2,6 +2,7 @@ package com.aix.swifttransit.common.core.util;
 
 import com.aix.swifttransit.common.core.constant.CommonConstants;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 
 import java.security.PublicKey;
@@ -36,10 +37,12 @@ public class JwtUtil {
     /**
      * /**
      * 检查 token 是否过期
+     * true 过期了
+     * false 没有过期
      */
     public static Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateToken(token);
-        return !expiration.before(new Date());
+        return expiration.before(new Date());
     }
 
     /**
@@ -67,8 +70,7 @@ public class JwtUtil {
     /**
      * 从 token 中获取所有的 Claims
      */
-    private static Claims getAllClaimToken(String token) {
-
+    private static Claims getAllClaimToken(String token) throws JwtException {
         return Jwts.parser().verifyWith(PUBLIC_KEY)
                 .build()
                 .parseSignedClaims(token).getPayload();

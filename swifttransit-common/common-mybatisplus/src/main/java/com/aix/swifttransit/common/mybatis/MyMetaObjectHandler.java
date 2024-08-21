@@ -1,4 +1,4 @@
-package com.swifttransit.common.mybatis;
+package com.aix.swifttransit.common.mybatis;
 
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;

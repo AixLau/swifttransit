@@ -1,7 +1,6 @@
 package com.aix.swifttransit.auth.service.impl;
 
 import com.aix.swifttransit.auth.client.UserClient;
-import com.aix.swifttransit.auth.constant.AuthorityConstant;
 import com.aix.swifttransit.auth.dto.LoginResponse;
 import com.aix.swifttransit.auth.dto.LoginUsernameRequest;
 import com.aix.swifttransit.auth.enums.DeletedStatusEnum;
@@ -79,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
         // 对传入的 Refresh Token 进行 MD5 加密
         String refreshTokenHash = DigestUtils.md5DigestAsHex(refreshToken.getBytes(StandardCharsets.UTF_8));
         // 检查 Redis 中的 MD5 加密后的 Refresh Token 是否存在并且有效
-        String storedRefreshTokenHash = redisTemplate.opsForValue().get(AuthorityConstant.REFRESH_TOKEN_KEY + username);
+        String storedRefreshTokenHash = redisTemplate.opsForValue().get(CommonConstants.REFRESH_TOKEN_KEY + username);
         if (!Objects.equals(refreshTokenHash, storedRefreshTokenHash)) {
             throw new RuntimeException("无效的刷新令牌");
         }
@@ -91,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
         // 对新的 Refresh Token 进行 MD5 加密
         String newRefreshTokenHash = DigestUtils.md5DigestAsHex(newRefreshToken.getBytes(StandardCharsets.UTF_8));
         // 更新 Redis 中的 MD5 加密后的 Refresh Token
-        redisTemplate.opsForValue().set(AuthorityConstant.REFRESH_TOKEN_KEY + username, newRefreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(CommonConstants.REFRESH_TOKEN_KEY + username, newRefreshTokenHash, CommonConstants.REFRESH_TOKEN_EXPIRATION, TimeUnit.MILLISECONDS);
 
         return new LoginResponse().setAccessToken(newAccessToken).setRefreshToken(newRefreshTokenHash);
     }
@@ -99,6 +98,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void invalidateToken(String username) {
         // 删除 Redis 中的 Refresh Token，强制其失效
-        redisTemplate.delete(AuthorityConstant.REFRESH_TOKEN_KEY + username);
+        redisTemplate.delete(CommonConstants.REFRESH_TOKEN_KEY + username);
     }
 }
