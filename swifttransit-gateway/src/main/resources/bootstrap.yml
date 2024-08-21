@@ -18,7 +18,10 @@ spring:
         enabled: true
         server-addr: swifttransit:8848
         namespace: 8d81aae5-2b8d-4425-880a-542091cdc3e7
-
+  data:
+    redis:
+      host: swifttransit
+      port: 6379
 nacos:
   gateway:
     route:
