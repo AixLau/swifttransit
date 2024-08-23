@@ -50,11 +50,10 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
     tags-sorter: alpha
-    operations-sorter: alpha
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'default'
+    - group: '后台管理系统'
       paths-to-match: '/**'
       packages-to-scan: com.aix.swifttransit.admin
 knife4j:
