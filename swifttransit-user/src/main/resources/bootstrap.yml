@@ -1,5 +1,7 @@
 server:
   port: 8020
+  servlet:
+    context-path: /user
 
 spring:
   application:
@@ -52,7 +54,7 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'default'
+    - group: '用户端'
       paths-to-match: '/**'
       packages-to-scan: com.aix.swifttransit.user
 knife4j:
