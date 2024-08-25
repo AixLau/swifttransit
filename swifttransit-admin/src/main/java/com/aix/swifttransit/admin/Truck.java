@@ -48,7 +48,7 @@ public class Truck implements Serializable {
     /**
      * 关联司机
      */
-    private String driverName;
+    private String driverIds;
     /**
      * 司机数量
      */
@@ -84,7 +84,7 @@ public class Truck implements Serializable {
     /**
      * 车辆类型名称
      */
-    private String truckTypeName;
+    private String truckType;
     /**
      * 工作状态 0：停用 1：启用
      */
