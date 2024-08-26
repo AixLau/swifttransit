@@ -18,9 +18,11 @@ public interface AddressService extends IService<Address> {
 
     void saveOrUpdateAddress(AddressAddOrUpdateDTO addressDTO);
 
-    List<Address> getAddressListByUserId(String id);
+    List<Address> getAddressListByUserId(Long id);
 
-    Address getSendAddressByUserId(String id);
+    Address getSendAddressByUserId(Long id);
 
-    Address getReceiveAddressByUserId(String id);
+    Address getReceiveAddressByUserId(Long id);
+
+    List<Address> searchAddress(Long userId, String keyword);
 }

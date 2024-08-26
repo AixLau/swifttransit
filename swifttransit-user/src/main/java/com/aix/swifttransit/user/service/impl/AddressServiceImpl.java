@@ -44,17 +44,25 @@ public class AddressServiceImpl extends ServiceImpl<AddressMapper, Address> impl
     }
 
     @Override
-    public List<Address> getAddressListByUserId(String id) {
+    public List<Address> getAddressListByUserId(Long id) {
         return this.lambdaQuery().eq(Address::getUserId, id).list();
     }
 
     @Override
-    public Address getSendAddressByUserId(String id) {
+    public Address getSendAddressByUserId(Long id) {
         return this.lambdaQuery().eq(Address::getUserId, id).eq(Address::getSendStatus, 1).one();
     }
 
     @Override
-    public Address getReceiveAddressByUserId(String id) {
+    public Address getReceiveAddressByUserId(Long id) {
         return this.lambdaQuery().eq(Address::getUserId, id).eq(Address::getReceiveStatus, 1).one();
+    }
+
+    @Override
+    public List<Address> searchAddress(Long userId, String keyword) {
+        return this.lambdaQuery().eq(Address::getUserId, userId)
+                .like(Address::getName, keyword).or()
+                .like(Address::getPhone, keyword).or()
+                .like(Address::getDetailAddress, keyword).list();
     }
 }

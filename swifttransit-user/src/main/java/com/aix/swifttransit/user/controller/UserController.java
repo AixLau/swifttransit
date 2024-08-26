@@ -3,6 +3,7 @@ package com.aix.swifttransit.user.controller;
 
 import com.aix.swifttransit.common.mvc.annotation.IgnoreResponseAdvice;
 import com.aix.swifttransit.user.dto.UserCredentialsDTO;
+import com.aix.swifttransit.user.entity.User;
 import com.aix.swifttransit.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -35,4 +38,8 @@ public class UserController {
         return this.userService.getByUsername(username);
     }
 
+    @GetMapping("/hello")
+    public List<User> hello() {
+        return this.userService.list();
+    }
 }

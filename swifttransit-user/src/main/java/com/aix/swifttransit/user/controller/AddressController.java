@@ -39,7 +39,7 @@ public class AddressController {
     @GetMapping("/{id}")
     public List<Address> getAddressList(
             @Parameter(name = "id", description = "用户id")
-            @PathVariable String id) {
+            @PathVariable Long id) {
         return this.addressService.getAddressListByUserId(id);
     }
 
@@ -53,17 +53,28 @@ public class AddressController {
     @GetMapping("/send/{id}")
     public Address getSendAddress(
             @Parameter(name = "id", description = "用户id")
-            @PathVariable String id) {
+            @PathVariable Long id) {
         return this.addressService.getSendAddressByUserId(id);
     }
 
     @Operation(summary = "用户默认收货地址", description = "通过用户id查询用户的默认收货地址")
-    @GetMapping("/send/{id}")
+    @GetMapping("/receive/{id}")
     public Address getReceiveAddress(
             @Parameter(name = "id", description = "用户id")
-            @PathVariable String id) {
+            @PathVariable Long id) {
         return this.addressService.getReceiveAddressByUserId(id);
     }
+
+    @Operation(summary = "搜索用户地址薄列表", description = "（姓名、手机号、详细地址）模糊搜索收货地址")
+    @GetMapping("/search")
+    public List<Address> searchAddress(
+            @Parameter(name = "id", description = "用户id")
+            @RequestParam Long id,
+            @Parameter(name = "keyword", description = "（姓名、手机号、详细地址）")
+            @RequestParam String keyword) {
+        return this.addressService.searchAddress(id, keyword);
+    }
+
 
 
 }
